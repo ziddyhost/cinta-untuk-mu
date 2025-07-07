@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>cinta bersama ziddy</title>
+  <style>
+    body {
+      background-color: #fff0f5;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .container {
+      position: relative;
+      width: 300px;
+      height: 180px;
+      margin-bottom: 20px;
+    }
+
+    .amplop-body {
+      width: 100%;
+      height: 100%;
+      background-color: #f44336;
+      position: relative;
+      border-radius: 8px;
+      z-index: 1;
+    }
+
+    .amplop-lid {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 90px;
+      background-color: #d32f2f;
+      transform-origin: top center;
+      transition: transform 0.8s ease;
+      z-index: 2;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+    }
+
+    .amplop-lid.open {
+      transform: rotateX(120deg);
+    }
+
+    .heart {
+      position: absolute;
+      top: 70px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 40px;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .surat {
+      position: absolute;
+      bottom: 15px;
+      left: 15px;
+      width: 270px;
+      height: 0;
+      background: white;
+      color: #333;
+      border-radius: 10px;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+      overflow: hidden;
+      text-align: center;
+      transition: all 1s ease;
+      z-index: 0;
+    }
+
+    .surat.show {
+      height: 140px;
+      bottom: 200px;
+    }
+
+    .pesan {
+      opacity: 0;
+      margin-top: 15px;
+      transition: opacity 1s ease;
+      padding: 10px;
+    }
+
+    .pesan.show {
+      opacity: 1;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    button {
+      padding: 8px 16px;
+      border: 2px solid #f44336;
+      background-color: transparent;
+      color: #f44336;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #f44336;
+      color: white;
+    }
+
+    /* Hati animasi */
+    .love-float {
+      position: absolute;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 24px;
+      color: pink;
+      opacity: 0;
+      animation: floatUp 2s ease-out forwards;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      0% {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -150px);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="amplop-body"></div>
+    <div class="amplop-lid" id="lid"></div>
+    <div class="heart">❤️</div>
+    <div class="surat" id="surat">
+      <div class="pesan" id="pesan">𝗸𝗮𝗹𝗼 𝗮𝗱𝗮 𝘆𝗴 𝗹𝗲𝗯𝗶𝗵 𝗶𝗻𝗱𝗮𝗵 𝗱𝗮𝗿𝗶 𝘀𝗲𝗻𝗷𝗮 𝗺𝗮𝗸𝗮 𝗶𝘁𝘂 𝗵𝗮𝗿𝗶 - 𝗵𝗮𝗿𝗶 𝗸𝘂 𝗯𝗲𝗿𝘀𝗮𝗺𝗮 𝗸𝗮𝗺𝘂 💌</div>
+    </div>
+  </div>
+
+  <div class="buttons">
+    <button onclick="bukaAmplop()">OPEN</button>
+    <button onclick="tutupAmplop()">CLOSE</button>
+  </div>
+
+  <audio id="loveSound" src="bucin.mp3" preload="auto" loop></audio>
+
+  <script>
+    const lid = document.getElementById("lid");
+    const surat = document.getElementById("surat");
+    const pesan = document.getElementById("pesan");
+    const audio = document.getElementById("loveSound");
+
+    function bukaAmplop() {
+      lid.classList.add("open");
+      surat.classList.add("show");
+      setTimeout(() => {
+        pesan.classList.add("show");
+      }, 700);
+      audio.play();
+      keluarkanLove();
+    }
+
+    function tutupAmplop() {
+      lid.classList.remove("open");
+      surat.classList.remove("show");
+      pesan.classList.remove("show");
+      audio.pause();
+      audio.currentTime = 0;
+    }
+
+    function keluarkanLove() {
+      for (let i = 0; i < 5; i++) {
+        const love = document.createElement("div");
+        love.classList.add("love-float");
+        love.style.left = `${50 + Math.random() * 20 - 10}%`;
+        love.style.fontSize = `${20 + Math.random() * 10}px`;
+        love.innerText = "❤️";
+        document.body.appendChild(love);
+
+        setTimeout(() => {
+          love.remove();
+        }, 2000);
+      }
+    }
+  </script>
+
+</body>
+</html>
